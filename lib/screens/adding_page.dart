@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_ecomerce/models/product_api.dart';
+import 'package:getx_ecomerce/widgets/textfield_widget.dart';
 
 class AddingPage extends StatefulWidget {
   final Product? product;
@@ -62,27 +63,31 @@ class _AddingPageState extends State<AddingPage> {
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            TextField(
-              controller: _titleController,
-              decoration: InputDecoration(labelText: 'Title'),
-            ),
-            TextField(
-              controller: _imageUrlController,
-              decoration: InputDecoration(labelText: 'Image URL'),
-            ),
-            TextField(
-              controller: _categoryController,
-              decoration: InputDecoration(labelText: 'Category'),
-            ),
-            TextField(
-              controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
-            ),
-            TextField(
-              controller: _priceController,
-              decoration: InputDecoration(labelText: 'Price'),
-              keyboardType: TextInputType.number,
-            ),
+            TextFieldWidget(
+                lText: 'Title',
+                hiText: 'Enter Title',
+                inputType: TextInputType.text,
+                controll: _titleController),
+            TextFieldWidget(
+                lText: 'Image URL',
+                hiText: 'Enter URL',
+                inputType: TextInputType.url,
+                controll: _imageUrlController),
+            TextFieldWidget(
+                lText: 'Category',
+                hiText: 'Enter Category',
+                inputType: TextInputType.text,
+                controll: _categoryController),
+            TextFieldWidget(
+                lText: 'Description',
+                hiText: 'Enter Description',
+                inputType: TextInputType.text,
+                controll: _descriptionController),
+            TextFieldWidget(
+                lText: 'Price',
+                hiText: 'Enter Price',
+                inputType: TextInputType.text,
+                controll: _priceController),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {

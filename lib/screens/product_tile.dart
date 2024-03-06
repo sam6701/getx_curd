@@ -13,7 +13,7 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.to(ProductDetail());
+        Get.to(ProductDetail(product));
       },
       child: Card(
         elevation: 2,
