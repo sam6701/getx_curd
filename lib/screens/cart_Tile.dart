@@ -39,7 +39,7 @@ class CartTile extends StatelessWidget {
                       Text(
                         '${cart.userId}',
                         style: TextStyle(
-                            color: Colors.green,
+                            color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.bold),
                       ),
@@ -47,14 +47,14 @@ class CartTile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "price:"
+                            "id:"
                             "${cart.id}",
-                            style: TextStyle(fontSize: 20, color: Colors.green),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                           Text(
                             "date:"
                             "${cart.date}",
-                            style: TextStyle(fontSize: 20, color: Colors.green),
+                            style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                         ],
                       )

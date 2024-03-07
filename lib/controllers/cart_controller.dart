@@ -1,4 +1,6 @@
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:getx_ecomerce/controllers/login_controller.dart';
 import 'package:getx_ecomerce/models/cart_api.dart';
 import 'package:getx_ecomerce/models/user_api.dart';
 import 'package:getx_ecomerce/services/cart_service.dart';
@@ -16,12 +18,13 @@ class CartController extends GetxController {
   }
 
   void fetchCarts() async {
+    final UserController userController = Get.put(UserController());
     try {
       isLoading(true);
-      var id = 1;
+      var id = userController.k;
       var carts = await CartServices.fetchCarts();
       if (carts != null) {
-        var filteredCarts = carts.where((cart) => cart.id == id).toList();
+        var filteredCarts = carts.where((cart) => cart.userId == id).toList();
         cartList.value = filteredCarts;
       }
     } finally {

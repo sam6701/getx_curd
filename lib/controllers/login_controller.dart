@@ -11,6 +11,7 @@ class UserController extends GetxController {
   RxList<User> UserList = RxList<User>();
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
+  late int k = 0;
 
   void fetchUsers() async {
     try {
@@ -43,6 +44,7 @@ class UserController extends GetxController {
     if (user != null && user.password == password && user.password.isNotEmpty) {
       // Password matches, navigate to home screen or dashboard
       Get.offAll(HomeScreen());
+      k = user.id;
       // Example navigation
     } else {
       // Password does not match
