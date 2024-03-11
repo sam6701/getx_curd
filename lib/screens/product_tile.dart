@@ -120,13 +120,16 @@ class ProductTile extends StatelessWidget {
                         Icons.edit,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ModifyPage(
-                              onProductSubmitted: RemoteServices.updateProduct,
-                              list_size: product.id,
-                            ),
+                        Get.to(
+                          ModifyPage(
+                            onProductSubmitted: RemoteServices.updateProduct,
+                            list_size: product.id,
+                            title: product.title,
+                            ima: product.image,
+                            cat: product.category,
+                            desc: product.description,
+                            price: product.price,
+                            rating: product.rating,
                           ),
                         );
                       },

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:getx_ecomerce/controllers/cart_controller.dart';
 import 'package:getx_ecomerce/screens/cart_Tile.dart';
 
 class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
-
+  final userdata = GetStorage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

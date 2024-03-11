@@ -5,19 +5,21 @@ class TextFieldWidget extends StatelessWidget {
   final String hiText;
   final TextInputType inputType;
   final TextEditingController controll;
+  final String? Function(String?)? validator;
   TextFieldWidget(
       {Key? key,
       required this.lText,
       required this.hiText,
       required this.inputType,
-      required this.controll})
+      required this.controll,
+      this.validator})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(5),
-      child: TextField(
+      child: TextFormField(
         // Set text style
         style: TextStyle(fontSize: 18),
         cursorColor: Colors.black,
@@ -30,6 +32,7 @@ class TextFieldWidget extends StatelessWidget {
           labelText: lText,
           hintText: hiText,
         ),
+        validator: validator,
       ),
     );
   }

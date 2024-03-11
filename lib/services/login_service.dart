@@ -47,6 +47,7 @@ class RemoteServices {
     if (response.statusCode == 200) {
       // If the product was successfully updated, fetch updated data
       RemoteServices.fetchProducts();
+      print(response.body);
     } else {
       // If updating the product failed, show an error message
       Get.snackbar("Update Failed", "Please try again.");
@@ -62,10 +63,12 @@ class RemoteServices {
       },
       body: jsonEncode(newProduct.toJson()),
     );
-
-    if (response.statusCode == 201) {
+    //print(response.body);
+    //print(response.statusCode);
+    if (response.statusCode == 200) {
       // If the product was successfully added, fetch updated data
       RemoteServices.fetchProducts();
+      Get.snackbar("Successful", "${response.body}");
     } else {
       // If adding the product failed, show an error message
       Get.snackbar("Add Failed", "Please try again.");

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:getx_ecomerce/models/user_api.dart';
 import 'package:getx_ecomerce/services/user_service.dart';
 import 'package:getx_ecomerce/screens/homescreen.dart';
@@ -12,7 +13,7 @@ class UserController extends GetxController {
   final emailController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
   late int k = 0;
-
+  final userdata = GetStorage();
   void fetchUsers() async {
     try {
       var users = await UserServices.fetchUsers();
@@ -46,6 +47,9 @@ class UserController extends GetxController {
       Get.offAll(HomeScreen());
       k = user.id;
       // Example navigation
+      userdata.write('isLogged', true);
+      userdata.write('user', user);
+      userdata.write('k', k);
     } else {
       // Password does not match
       Get.snackbar("Login Failed", "Invalid password. Please try again.");

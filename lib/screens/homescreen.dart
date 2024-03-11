@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:getx_ecomerce/controllers/product_controller.dart';
 import 'package:get/instance_manager.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:getx_ecomerce/screens/adding_page.dart';
+import 'package:getx_ecomerce/screens/login_page.dart';
 import 'package:getx_ecomerce/screens/product_tile.dart';
 import 'package:getx_ecomerce/screens/product_detail.dart';
 import 'package:getx_ecomerce/screens/cart_page.dart';
@@ -11,7 +13,7 @@ import 'package:getx_ecomerce/services/login_service.dart';
 
 class HomeScreen extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
-
+  final userdata = GetStorage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,18 +33,24 @@ class HomeScreen extends StatelessWidget {
               Icons.add,
             ),
             onPressed: () {
-              //Get.to(CartScreen());
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddingPage(
-                    onProductSubmitted: RemoteServices.addProduct,
-                    list_size: productController.productList.last.id,
-                  ),
+              Get.to(
+                AddingPage(
+                  onProductSubmitted: RemoteServices.addProduct,
+                  list_size: productController.productList.last.id,
                 ),
               );
             },
-          )
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.logout_sharp,
+            ),
+            onPressed: () {
+              userdata.write('isLogged', false);
+              userdata.remove('user');
+              Get.offAll(LoginScreen());
+            },
+          ),
         ],
       ),
       body: Column(
