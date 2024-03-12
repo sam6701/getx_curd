@@ -32,4 +32,35 @@ class CartController extends GetxController {
       isLoading(false);
     }
   }
+
+  void SortCarts() async {
+    final UserController userController = Get.put(UserController());
+    try {
+      isLoading(true);
+      var id = userdata.read('k');
+      var carts = await CartServices.SortCarts();
+      if (carts != null) {
+        var filteredCarts = carts.where((cart) => cart.userId == id).toList();
+        cartList.value = filteredCarts;
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void SortbydatesCarts(DateTime ini, DateTime fin) async {
+    final UserController userController = Get.put(UserController());
+    try {
+      isLoading(true);
+      var id = userdata.read('k');
+      var carts = await CartServices.SortbydateCarts(ini, fin);
+      if (carts != null) {
+        var filteredCarts = carts.where((cart) => cart.userId == id).toList();
+        cartList.value = filteredCarts;
+        print('hello');
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
 }

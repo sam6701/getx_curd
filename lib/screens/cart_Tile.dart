@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getx_ecomerce/models/cart_api.dart';
+import 'package:getx_ecomerce/services/cart_service.dart';
 
 class CartTile extends StatelessWidget {
   final Cart cart;
@@ -36,12 +38,27 @@ class CartTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${cart.userId}',
-                        style: TextStyle(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${cart.userId}',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          IconButton(
                             color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
+                            icon: Icon(
+                              Icons.cancel_outlined,
+                            ),
+                            onPressed: () {
+                              CartServices.deleteCart(cart.id);
+                              Get.back();
+                            },
+                          ),
+                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
