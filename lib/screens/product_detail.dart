@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:getx_ecomerce/controllers/cart_controller.dart';
+import 'package:getx_ecomerce/controllers/login_controller.dart';
+import 'package:getx_ecomerce/models/cart_api.dart';
 import 'package:getx_ecomerce/models/product_api.dart';
+import 'package:getx_ecomerce/models/user_api.dart';
+import 'package:getx_ecomerce/services/cart_service.dart';
 
 class ProductDetail extends StatelessWidget {
   final Product product;
-  const ProductDetail(this.product);
+  ProductDetail(this.product);
+  final CartController cartController = Get.put(CartController());
+  final UserController userController = Get.put(UserController());
+  final userdata = GetStorage();
 
   @override
   Widget build(BuildContext context) {
     var quantity = 1.obs;
+    dynamic us = userdata.read('user');
+    int useri = us['id'];
+    DateTime dateTime = DateTime.now();
+    String dateString = dateTime.toString();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 205, 193, 236),
       appBar: AppBar(
@@ -132,7 +145,19 @@ class ProductDetail extends StatelessWidget {
                     height: 55,
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Cart c = Cart(
+                            id: cartController.cartList.last.id + 1,
+                            userId: useri,
+                            date: dateString,
+                            products: [
+                              Products(
+                                  productId: product.id,
+                                  quantity: quantity.value),
+                            ],
+                            v: 0);
+                        CartServices.addCart(c);
+                      },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
                             const Color.fromARGB(255, 162, 135, 238)),

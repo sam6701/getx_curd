@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:getx_ecomerce/widgets/Alert_Dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:getx_ecomerce/models/product_api.dart';
 
@@ -28,6 +29,8 @@ class RemoteServices {
     if (response.statusCode == 200) {
       // If the product was successfully deleted, fetch updated data
       RemoteServices.fetchProducts();
+      //Get.snackbar("Successful", "${response.body}");
+      Get.dialog(Alert(title: "Successful", response: response.body));
     } else {
       // If deleting the product failed, show an error message
       Get.snackbar("Delete Failed", "Please try again.");
@@ -47,7 +50,8 @@ class RemoteServices {
     if (response.statusCode == 200) {
       // If the product was successfully updated, fetch updated data
       RemoteServices.fetchProducts();
-      print(response.body);
+      //print(response.body);
+      Get.dialog(Alert(title: "Successful", response: response.body));
     } else {
       // If updating the product failed, show an error message
       Get.snackbar("Update Failed", "Please try again.");
@@ -68,7 +72,8 @@ class RemoteServices {
     if (response.statusCode == 200) {
       // If the product was successfully added, fetch updated data
       RemoteServices.fetchProducts();
-      Get.snackbar("Successful", "${response.body}");
+      //Get.snackbar("Successful", "${response.body}");
+      Get.dialog(Alert(title: "Successful", response: response.body));
     } else {
       // If adding the product failed, show an error message
       Get.snackbar("Add Failed", "Please try again.");

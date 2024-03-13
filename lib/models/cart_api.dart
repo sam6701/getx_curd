@@ -18,7 +18,7 @@ class Cart {
   int id;
   int userId;
   String date;
-  List<Product> products;
+  List<Products> products;
   int v;
 
   Cart({
@@ -33,8 +33,8 @@ class Cart {
         id: json["id"],
         userId: json["userId"],
         date: json["date"],
-        products: new List<Product>.from(
-            json["products"].map((x) => Product.fromJson(x))),
+        products: new List<Products>.from(
+            json["products"].map((x) => Products.fromJson(x))),
         v: json["__v"],
       );
 
@@ -47,16 +47,16 @@ class Cart {
       };
 }
 
-class Product {
+class Products {
   int productId;
   int quantity;
 
-  Product({
+  Products({
     required this.productId,
     required this.quantity,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) => new Product(
+  factory Products.fromJson(Map<String, dynamic> json) => new Products(
         productId: json["productId"],
         quantity: json["quantity"],
       );
