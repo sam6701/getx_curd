@@ -51,6 +51,18 @@ class CartServices {
     }
   }
 
+  static Future<List<Cart>?> SortbyasecCarts() async {
+    var response =
+        await client.get(Uri.parse('https://fakestoreapi.com/carts?sort=asc'));
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return welcomeFromJson(jsonString);
+    } else {
+      //show error message
+      return null;
+    }
+  }
+
   static Future<List<Cart>?> SortbydateCarts(
       DateTime initial, DateTime finaldate) async {
     String formattedInitialDate = DateFormat('yyyy-MM-dd').format(initial);

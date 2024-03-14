@@ -33,12 +33,27 @@ class CartController extends GetxController {
     }
   }
 
-  void SortCarts() async {
+  void SortByDescCarts() async {
     final UserController userController = Get.put(UserController());
     try {
       isLoading(true);
       var id = userdata.read('k');
       var carts = await CartServices.SortCarts();
+      if (carts != null) {
+        var filteredCarts = carts.where((cart) => cart.userId == id).toList();
+        cartList.value = filteredCarts;
+      }
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void SortByAsecCarts() async {
+    final UserController userController = Get.put(UserController());
+    try {
+      isLoading(true);
+      var id = userdata.read('k');
+      var carts = await CartServices.SortbyasecCarts();
       if (carts != null) {
         var filteredCarts = carts.where((cart) => cart.userId == id).toList();
         cartList.value = filteredCarts;
@@ -57,7 +72,6 @@ class CartController extends GetxController {
       if (carts != null) {
         var filteredCarts = carts.where((cart) => cart.userId == id).toList();
         cartList.value = filteredCarts;
-        print('hello');
       }
     } finally {
       isLoading(false);
