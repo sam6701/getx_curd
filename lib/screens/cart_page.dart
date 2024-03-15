@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:getx_ecomerce/controllers/cart_controller.dart';
+import 'package:getx_ecomerce/controllers/product_controller.dart';
 import 'package:getx_ecomerce/controllers/selection_controller.dart';
+import 'package:getx_ecomerce/controllers/total_controller.dart';
 import 'package:getx_ecomerce/screens/cart_Tile.dart';
 import 'package:getx_ecomerce/services/cart_service.dart';
 
@@ -12,6 +14,8 @@ import 'package:intl/intl.dart';
 class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
   final SelectionController selectController = Get.put(SelectionController());
+  final ProductController productController = Get.put(ProductController());
+  final TotalCostController controller = Get.put(TotalCostController());
   final userdata = GetStorage();
 
   Future<void> _selectDateRange(BuildContext context) async {
@@ -111,6 +115,12 @@ class CartScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Obx(
+                () => Text(
+                  '\$${controller.totalCost}',
+                  style: TextStyle(color: Colors.white, fontSize: 30),
+                ),
+              ),
               Text(
                 // Calculate the sum of quantities of products in selected items
                 selectController.selectedItems
@@ -127,9 +137,7 @@ class CartScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 30),
               ),
               InkWell(
-                onTap: () {
-                  selectController.performAction();
-                },
+                onTap: () {},
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_ecomerce/controllers/product_controller.dart';
+
 import 'package:getx_ecomerce/models/cart_api.dart';
 import 'package:getx_ecomerce/services/cart_service.dart';
 import 'package:intl/intl.dart';
@@ -13,6 +15,7 @@ class CartTile extends StatelessWidget {
   Widget build(BuildContext context) {
     String Datec = cart.date;
     String sDec = Datec.substring(0, 10);
+    final ProductController productController = Get.put(ProductController());
     return Padding(
       padding: EdgeInsets.only(left: 10, right: 10, top: 10),
       child: InkWell(
@@ -33,7 +36,7 @@ class CartTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: 200,
+                    //height: 200,
                     padding: EdgeInsets.only(right: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -112,16 +115,38 @@ class CartTile extends StatelessWidget {
                                   itemCount: cart.products.length,
                                   itemBuilder: (context, cIndex) {
                                     int pq = cart.products[cIndex].quantity;
+                                    String image = '';
+                                    for (var i
+                                        in productController.productList) {
+                                      if (i.id ==
+                                          cart.products[cIndex].productId) {
+                                        image = i.image;
+                                        break;
+                                      }
+                                    }
+                                    ;
+
                                     return Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          "pid:"
-                                          "${cart.products[cIndex].productId}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.purple),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width: 30,
+                                              height: 30,
+                                              child: CircleAvatar(
+                                                backgroundImage:
+                                                    NetworkImage(image),
+                                              ),
+                                            ),
+                                            Text(
+                                              "${cart.products[cIndex].productId}",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.purple),
+                                            ),
+                                          ],
                                         ),
                                         Row(
                                           children: [
