@@ -9,20 +9,30 @@ import 'package:intl/intl.dart';
 class CartTile extends StatelessWidget {
   final Cart cart;
   final Function(bool) onChanged;
-  const CartTile(this.cart, {required this.onChanged});
+  RxBool ChangedValue;
+  CartTile(this.cart,
+      {super.key, required this.onChanged, required this.ChangedValue});
 
   @override
   Widget build(BuildContext context) {
     String Datec = cart.date;
     String sDec = Datec.substring(0, 10);
     final ProductController productController = Get.put(ProductController());
-    return Padding(
-      padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-      child: InkWell(
-        onTap: () {
-          onChanged(true);
-        },
+    return Row(children: [
+      Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: Obx(() => Checkbox(
+              value: ChangedValue.value,
+              onChanged: (newValue) {
+                ChangedValue.value = newValue ?? false;
+                onChanged(ChangedValue.value);
+              },
+            )),
+      ),
+      Padding(
+        padding: EdgeInsets.only(left: 10, right: 10, top: 10),
         child: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30), color: Colors.black12),
           child: Row(
@@ -54,11 +64,16 @@ class CartTile extends StatelessWidget {
                             ),
                             Row(
                               children: [
+                                /*Obx(() => Checkbox(
+                                      value: ChangedValue.value,
+                                      onChanged: (newValue) {
+                                        ChangedValue.value = newValue ?? false;
+                                        onChanged(ChangedValue.value);
+                                      },
+                                    )),*/
                                 IconButton(
                                   color: Colors.purple,
-                                  icon: Icon(
-                                    Icons.cancel_outlined,
-                                  ),
+                                  icon: Icon(Icons.cancel_outlined),
                                   onPressed: () {
                                     CartServices.deleteCart(cart.id);
                                     Get.back();
@@ -66,21 +81,13 @@ class CartTile extends StatelessWidget {
                                 ),
                                 IconButton(
                                   color: Colors.purple,
-                                  icon: Icon(
-                                    Icons.edit,
-                                  ),
+                                  icon: Icon(Icons.edit),
                                   onPressed: () {
-                                    Cart c = Cart(
-                                        date: cart.date,
-                                        id: cart.id,
-                                        userId: cart.userId,
-                                        products: [
-                                          Products(
-                                              productId: cart.products.length,
-                                              quantity: cart.userId),
-                                        ],
-                                        v: 0);
-                                    CartServices.updateCart(c);
+                                    // Assuming you want to update some property of the cart
+                                    cart.products.add(Products(
+                                        productId: cart.products.length,
+                                        quantity: cart.userId));
+                                    CartServices.updateCart(cart);
                                     Get.back();
                                   },
                                 ),
@@ -187,6 +194,6 @@ class CartTile extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ]);
   }
 }

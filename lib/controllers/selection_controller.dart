@@ -8,14 +8,14 @@ import 'package:getx_ecomerce/widgets/Alert_Dialog.dart';
 class SelectionController extends GetxController {
   final selectedItems = List<Cart>.empty(growable: true).obs;
   final CartController cartController = Get.put(CartController());
-  bool isSelected(int index) {
+  RxBool isSelected(int index) {
     final item = cartController.cartList[index];
-    return selectedItems.contains(item);
+    return selectedItems.contains(item).obs;
   }
 
   void toggleSelection(int index) {
     final item = cartController.cartList[index];
-    if (isSelected(index)) {
+    if (isSelected(index).value) {
       selectedItems.remove(item);
     } else {
       selectedItems.add(item);

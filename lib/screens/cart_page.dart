@@ -11,6 +11,8 @@ import 'package:getx_ecomerce/services/cart_service.dart';
 import 'package:intl/intl.dart';
 
 //import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
+var selectedOption = 'Ascending'.obs;
+
 class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
   final SelectionController selectController = Get.put(SelectionController());
@@ -57,7 +59,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<IconButton> icons = [
+    /*final List<IconButton> icons = [
       IconButton(
         icon: Icon(Icons.arrow_circle_up_outlined),
         onPressed: () {
@@ -101,6 +103,55 @@ class CartScreen extends StatelessWidget {
           );
         }).toList(),
       );
+    }*/
+
+    final List<Obx> radioListTiles = [
+      Obx(() => RadioListTile(
+            title: Text('Sort By Ascending'),
+            value: 'Ascending',
+            groupValue: selectedOption.value,
+            onChanged: (value) {
+              selectedOption.value = value!; // Update selected option
+              cartController.SortByAsecCarts(); // Sort cart items
+              Get.back(); // Close the dropdown
+            },
+            activeColor: Colors.purple,
+          )),
+      Obx(() => RadioListTile(
+            title: Text('Sort By Descending'),
+            value: 'Descending',
+            groupValue: selectedOption.value,
+            onChanged: (value) {
+              selectedOption.value = value!; // Update selected option
+              cartController.SortByDescCarts(); // Sort cart items
+              Get.back(); // Close the dropdown
+            },
+            activeColor: Colors.purple,
+          )),
+    ];
+
+    void _showDropdown(BuildContext context) {
+      final RenderBox button = context.findRenderObject() as RenderBox;
+      final RenderBox overlay =
+          Overlay.of(context).context.findRenderObject() as RenderBox;
+      final Offset target = Offset(overlay.size.width,
+          button.localToGlobal(Offset.zero, ancestor: overlay).dy);
+      final RelativeRect position = RelativeRect.fromLTRB(
+        target.dx,
+        target.dy,
+        target.dx,
+        target.dy + button.size.height,
+      );
+
+      showMenu(
+        context: context,
+        position: position,
+        items: radioListTiles.map((radioListTile) {
+          return PopupMenuItem(
+            child: radioListTile,
+          );
+        }).toList(),
+      );
     }
 
     return Scaffold(
@@ -117,7 +168,7 @@ class CartScreen extends StatelessWidget {
             children: [
               Obx(
                 () => Text(
-                  '\$${controller.totalCost}',
+                  '\$${controller.totalCost.toStringAsFixed(2)}',
                   style: TextStyle(color: Colors.white, fontSize: 30),
                 ),
               ),
@@ -182,6 +233,7 @@ class CartScreen extends StatelessWidget {
                   color: Colors.white,
                   icon: Icon(Icons.sort_by_alpha_outlined),
                   onPressed: () {
+                    //_showDropdown(context, cartController);
                     _showDropdown(context);
                   },
                 ), //Icon(Icons.sort_rounded),
@@ -208,6 +260,7 @@ class CartScreen extends StatelessWidget {
                   onChanged: (isChecked) {
                     selectController.toggleSelection(index);
                   },
+                  ChangedValue: selectController.isSelected(index),
                 );
               });
         }
