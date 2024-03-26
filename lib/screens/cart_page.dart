@@ -130,7 +130,7 @@ class CartScreen extends StatelessWidget {
           )),
     ];
 
-    void _showDropdown(BuildContext context) {
+    /*void _showDropdown(BuildContext context) {
       final RenderBox button = context.findRenderObject() as RenderBox;
       final RenderBox overlay =
           Overlay.of(context).context.findRenderObject() as RenderBox;
@@ -151,6 +151,27 @@ class CartScreen extends StatelessWidget {
             child: radioListTile,
           );
         }).toList(),
+      );
+    }*/
+    void _showDropdown(BuildContext context) {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: radioListTiles.map((radioListTile) {
+                return ListTile(
+                  title: radioListTile,
+                  onTap: () {
+                    // Handle the tap on each item if needed
+                    Navigator.pop(context); // Close the bottom sheet
+                  },
+                );
+              }).toList(),
+            ),
+          );
+        },
       );
     }
 
